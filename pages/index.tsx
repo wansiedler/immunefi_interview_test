@@ -1,17 +1,5 @@
-import Head from "next/head";
+import Dashboard from "@/components/Dashboard/Dashboard";
 
-export default function Home() {
-  return (
-    <>
-      <Head>
-        <title>Immunefi - Reports</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+const Home = () => <Dashboard/>;
 
-      <main>
-        <h1>Reports</h1>
-      </main>
-    </>
-  );
-}
+export default Home;

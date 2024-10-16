@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS immunefi;
+CREATE DATABASE immunefi;

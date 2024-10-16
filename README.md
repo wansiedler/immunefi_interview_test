@@ -1,34 +1,52 @@
-# full-stack take-home assignment
 
-## Prerequisites
-
-Docker Compose must be installed on your machine. If it is not installed, you can find the installation instructions for your specific operating system on the [Docker](https://www.docker.com/) website.
-
-## Running the web server
-
-Start the application services by running the following command:
+## TL;DR
 
 ```
-docker compose up
+docker compose up --build --force-recreate --renew-anon-volumes
+```
+and locally after
+```
+npx prisma migrate deploy;
+npx prisma generate;
+npx prisma db seed;
+npm run dev;
 ```
 
-The website will be available at `http://localhost:3000/`. When you are finished working with the services, stop them by running the following command:
 
+## What was done
+
+- updated `prisma/schema.prisma` to have `username` column in `User`
 ```
-docker compose down
+pnpx prisma migrate dev --name usertable_update
+migrations/
+  └─ 20241016110806_usertable_update/
+    └─ migration.sql
 ```
-
-## Seeding the database
-
-Once you start the appliaction, you will need to seed the appliaction database. To do so, you will need to log into the container by running:
-
+- updated `prisma/schema.prisma` to have `description` column in `Report` (otherwise reports have no sense, right?)
 ```
-docker compose exec next bash
+pnpx prisma migrate dev --name reporttable_update
+migrations/
+  └─ 20241017120835_reporttable_update/
+    └─ migration.sql
 ```
-
-Then:
-
+- updated `seeds.ts` to populate `username` column in `User` and `description` column in `Report`
+- updated docker-compose to add necessary steps automatically
 ```
+npx prisma migrate dev
 npx prisma db seed
 ```
+- added `Dashboard` component and used MUI for better looking UI
+- IDs are clickable and lead to `Report` page
+- added `Filter` components for `Tabs` and the following filters  
+```
+●-Status
+● Severity
+● ID (integers only)
+● Hacker username or email address
+● Report type
+● Project
+```
+- API Key is kept in `.env`
+- client API funcs are kept in `utils/API.js`
+- updated `api/reports` to handle filters, sorting and API Key
 
